@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = 5000;
-const MONGO_URI = 'mongodb+srv://mohan:ihom@cluster0.xzygmlo.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0';
+const MONGO_URI = 'mongodb+srv://mohan:ihom@cluster0.xzygmlo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const JWT_SECRET = 'ihom';
 
 // MongoDB Connection
