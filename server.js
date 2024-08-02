@@ -35,15 +35,21 @@ app.use(express.json());
 
 // Register Route
 app.post('/api/users/register', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    const user = new User({ username, password });
-    await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    res.status(400).json({ error: 'Error registering user' });
-  }
-});
+    try {
+      const { username, password } = req.body;
+      if (!username || !password) {
+        return res.status(400).json({ error: 'Username and password are required' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = new User({ username, password: hashedPassword });
+      await newUser.save();
+      res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+      console.error('Registration error:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
 
 // Login Route
 app.post('/api/users/login', async (req, res) => {
